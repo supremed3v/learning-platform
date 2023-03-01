@@ -21,6 +21,7 @@
     "validator": "^13.9.0"
   },
   "dependencies": {
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "datauri": "^4.1.0"
   }
 }
