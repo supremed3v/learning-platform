@@ -21,6 +21,7 @@
     "validator": "^13.9.0"
   },
   "dependencies": {
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "datauri": "^4.1.0"
   }
