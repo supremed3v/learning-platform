@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
-import User from "../models/user.js";
+import { User } from "../models/user.js";
 
-export default authCheck = async (req, res, next) => {
+export const authCheck = async (req, res, next) => {
   const { token } = req.cookies;
 
   if (!token) {

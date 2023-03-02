@@ -1,4 +1,4 @@
-import User from "../models/user.js";
+import { User } from "../models/user.js";
 import cloudinary from "cloudinary";
 import { sendJwt } from "../middlewares/sendJwt.js";
 import parseData from "../utils/dataParser.js";
@@ -104,4 +104,32 @@ export const loginUser = async (req, res, next) => {
       message: error.message,
     });
   }
+};
+
+export const logoutUser = async (req, res, next) => {
+  res.cookie("token", null, {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Logged out",
+  });
+};
+
+export const getUser = async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: "User not found",
+    });
+  }
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
 };

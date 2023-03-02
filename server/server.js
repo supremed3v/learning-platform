@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cloudinary from "cloudinary";
 import connectDB from "./utils/connectDB.js";
+import userRoutes from "./routes/user.routes.js";
 
 dotenv.config();
 
@@ -19,6 +20,8 @@ cloudinary.v2.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
+
+app.use("/api/v1", userRoutes);
 
 process.on("uncaughtException", (error) => {
   console.log("Uncaught Exception: ", error.message);
