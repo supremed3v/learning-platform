@@ -7,10 +7,7 @@ import parseData from "../utils/dataParser.js";
 
 export const registerUser = async (req, res, next) => {
   const { name, email, password } = req.body;
-  const file = req.body;
-
-  const data = parseData(file);
-
+  console.log(req.body, req.file);
   try {
     if (!name || !email || !password) {
       return res.status(400).json({
@@ -25,6 +22,16 @@ export const registerUser = async (req, res, next) => {
         message: "Email already exists",
       });
     }
+    const file = req.file;
+    const data = parseData(file);
+    console.log(data);
+
+    if (!data) {
+      return res.status(400).json({
+        success: false,
+        message: "Please upload a valid image",
+      });
+    }
 
     const result = await cloudinary.v2.uploader.upload(data.content, {
       folder: "avatars",
@@ -32,7 +39,7 @@ export const registerUser = async (req, res, next) => {
       crop: "scale",
     });
 
-    const user = await User.create({
+    await User.create({
       name,
       email,
       password,
@@ -46,21 +53,11 @@ export const registerUser = async (req, res, next) => {
       success: true,
       message: "User registered successfully",
     });
-
-    sendJwt(user, 200, res);
   } catch (error) {
-    if (error.name === "ValidationError") {
-      const messages = Object.values(error.errors).map((val) => val.message);
-      return res.status(400).json({
-        success: false,
-        message: messages,
-      });
-    } else {
-      return res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    }
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 
   next();

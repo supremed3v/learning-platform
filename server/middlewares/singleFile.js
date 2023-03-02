@@ -1,7 +1,6 @@
 import multer from "multer";
 
-const singleFile = multer({
-  storage: multer.memoryStorage(),
-}).single("file");
+const storage = multer.memoryStorage();
+const singleFile = multer({ storage }).single("file");
 
 export default singleFile;
