@@ -141,8 +141,8 @@ export const deleteLecture = async (req, res) => {
       lecture.video.public_id
     );
 
-    if (result.result === "ok") {
-      lecture.remove();
+    if (result) {
+      course.lectures.pull(lecture._id);
 
       course.numOfVideos = course.lectures.length;
 
