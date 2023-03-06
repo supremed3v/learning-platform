@@ -1,13 +1,18 @@
 import express from "express";
 import singleFile from "../middlewares/singleFile.js";
 import { authCheck, adminCheck } from "../middlewares/auth.js";
-import { addLecture, createCourse } from "../controllers/courseController.js";
+import {
+  addLecture,
+  createCourse,
+  getCourses,
+} from "../controllers/courseController.js";
 
 const router = express.Router();
 
 router
   .route("/course")
-  .post(authCheck, adminCheck("admin", "instructor"), singleFile, createCourse);
+  .post(authCheck, adminCheck("admin", "instructor"), singleFile, createCourse)
+  .get(getCourses);
 
 router
   .route("/course/:id/lecture")

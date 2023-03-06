@@ -101,3 +101,20 @@ export const addLecture = async (req, res) => {
     });
   }
 };
+
+export const getCourses = async (req, res) => {
+  try {
+    const courses = await Course.find()
+      .populate("instructor", "name") // populate instructor field with name field from User model
+      .select("-lectures");
+
+    res.status(200).json({
+      success: true,
+      courses,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+};
