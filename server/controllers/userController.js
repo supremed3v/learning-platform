@@ -176,3 +176,28 @@ export const updateUser = async (req, res) => {
     });
   }
 };
+
+export const becomeInstructor = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select("+role");
+
+    if (user.role !== "instructor") {
+      user.role = "instructor";
+      await user.save();
+      res.status(200).json({
+        success: true,
+        message: "You are now an instructor",
+      });
+    } else {
+      res.status(400).json({
+        success: false,
+        message: "You are already an instructor",
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
