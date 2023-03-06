@@ -40,6 +40,9 @@ const schema = new mongoose.Schema({
           required: true,
         },
       },
+      description: {
+        type: String,
+      },
     },
   ],
   view: {
