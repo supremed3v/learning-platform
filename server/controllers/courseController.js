@@ -118,3 +118,104 @@ export const getCourses = async (req, res) => {
     });
   }
 };
+
+export const deleteLecture = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+
+    if (!course) {
+      return res.status(400).json({
+        error: "Course not found",
+      });
+    }
+
+    const lecture = course.lectures.id(req.params.lectureId);
+
+    if (!lecture) {
+      return res.status(400).json({
+        error: "Lecture not found",
+      });
+    }
+
+    const result = await cloudinary.v2.uploader.destroy(
+      lecture.video.public_id
+    );
+
+    if (result.result === "ok") {
+      lecture.remove();
+
+      course.numOfVideos = course.lectures.length;
+
+      await course.save();
+
+      res.status(200).json({
+        success: true,
+        message: "Lecture deleted successfully",
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+export const updateLecture = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+
+    if (!course) {
+      return res.status(400).json({
+        error: "Course not found",
+      });
+    }
+
+    const lecture = course.lectures.id(req.params.lectureId);
+
+    if (!lecture) {
+      return res.status(400).json({
+        error: "Lecture not found",
+      });
+    }
+
+    const { title, description } = req.body;
+
+    if (title) {
+      lecture.title = title;
+    } else if (description) {
+      lecture.description = description;
+    } else if (req.file) {
+      const file = req.file;
+
+      const data = parseData(file);
+
+      if (!data) {
+        return res.status(400).json({
+          error: "Please upload a valid video",
+        });
+      }
+
+      const result = await cloudinary.v2.uploader.upload(data.content, {
+        resource_type: "video",
+        folder: "courses",
+        allowed_formats: ["mp4", "mov", "avi", "wmv"],
+      });
+
+      lecture.video = {
+        public_id: result.public_id,
+        url: result.secure_url,
+      };
+    }
+
+    await course.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Lecture updated successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+};

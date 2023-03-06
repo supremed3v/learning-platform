@@ -4,7 +4,9 @@ import { authCheck, adminCheck } from "../middlewares/auth.js";
 import {
   addLecture,
   createCourse,
+  deleteLecture,
   getCourses,
+  updateLecture,
 } from "../controllers/courseController.js";
 
 const router = express.Router();
@@ -17,5 +19,14 @@ router
 router
   .route("/course/:id/lecture")
   .put(authCheck, adminCheck("admin", "instructor"), singleFile, addLecture);
+router
+  .route("/course/:id/lecture/:lectureId")
+  .delete(
+    authCheck,
+    adminCheck("admin", "instructor"),
+    singleFile,
+    deleteLecture
+  )
+  .put(authCheck, adminCheck("admin", "instructor"), singleFile, updateLecture);
 
 export default router;
