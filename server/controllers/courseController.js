@@ -250,3 +250,41 @@ export const buyCourse = async (req, res) => {
     });
   }
 };
+
+export const removeCourse = async (req, res) => {
+  const user = await User.findById(req.user._id);
+  const course = await Course.findById(req.params.id);
+
+  if (!user.playList.includes(course._id)) {
+    return res.status(400).json({
+      error: "Course not found",
+    });
+  }
+
+  user.playList.pull(course._id);
+
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Course removed successfully",
+  });
+};
+
+export const userCourse = async (req, res) => {
+  try {
+    const courses = await User.findById(req.user._id).populate(
+      "playList.course",
+      "title numOfVideos"
+    );
+
+    res.status(200).json({
+      success: true,
+      courses,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+};
