@@ -5,6 +5,7 @@ import cloudinary from "cloudinary";
 import connectDB from "./utils/connectDB.js";
 import userRoutes from "./routes/user.routes.js";
 import cookieParser from "cookie-parser";
+import courseRoutes from "./routes/course.routes.js";
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ cloudinary.v2.config({
 });
 
 app.use("/api/v1", userRoutes);
+app.use("/api/v1", courseRoutes);
 
 process.on("uncaughtException", (error) => {
   console.log("Uncaught Exception: ", error.message);
