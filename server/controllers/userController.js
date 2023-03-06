@@ -130,3 +130,49 @@ export const getUser = async (req, res, next) => {
     user,
   });
 };
+
+export const updateUser = async (req, res) => {
+  const { name, email, newPassword, oldPassword } = req.body;
+
+  try {
+    const user = await User.findById(req.user._id);
+
+    if (email) {
+      user.email = email;
+    } else if (name) {
+      user.name = name;
+    } else if (password) {
+      if (user.matchPassword(oldPassword)) {
+        user.password = newPassword;
+      } else {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid password",
+        });
+      }
+    }
+
+    const file = req.file;
+
+    if (file) {
+      await cloudinary.v2.uploader.destroy(user.avatar.public_id);
+      const data = parseData(file);
+      const result = await cloudinary.v2.uploader.upload(data.content, {
+        folder: "avatars",
+        width: 150,
+        crop: "scale",
+      });
+      user.avatar = {
+        public_id: result.public_id,
+        url: result.secure_url,
+      };
+    }
+
+    await user.save();
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
