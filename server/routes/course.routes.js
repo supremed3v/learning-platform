@@ -12,6 +12,8 @@ import {
 
 const router = express.Router();
 
+// Tested and working
+
 router
   .route("/course")
   .post(authCheck, adminCheck("admin", "instructor"), singleFile, createCourse)
@@ -29,6 +31,8 @@ router
     deleteLecture
   )
   .put(authCheck, adminCheck("admin", "instructor"), singleFile, updateLecture);
+
+// Yet to be tested
 
 router.route("/course/buy/:id").post(authCheck, adminCheck("user"), buyCourse);
 
