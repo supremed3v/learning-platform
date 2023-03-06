@@ -3,6 +3,7 @@ import singleFile from "../middlewares/singleFile.js";
 import { authCheck, adminCheck } from "../middlewares/auth.js";
 import {
   addLecture,
+  buyCourse,
   createCourse,
   deleteLecture,
   getCourses,
@@ -28,5 +29,7 @@ router
     deleteLecture
   )
   .put(authCheck, adminCheck("admin", "instructor"), singleFile, updateLecture);
+
+router.route("/course/buy/:id").post(authCheck, adminCheck("user"), buyCourse);
 
 export default router;

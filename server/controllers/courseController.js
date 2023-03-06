@@ -1,4 +1,5 @@
 import { Course } from "../models/course.js";
+import { User } from "../models/user.js";
 import cloudinary from "cloudinary";
 import parseData from "../utils/dataParser.js";
 
@@ -212,6 +213,36 @@ export const updateLecture = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Lecture updated successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+export const buyCourse = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+
+    const user = await User.findById(req.user._id);
+
+    if (user.playList.includes(course._id)) {
+      return res.status(400).json({
+        error: "Course already purchased",
+      });
+    }
+
+    user.playList.push({
+      course: course._id,
+      poster: course.poster.url,
+    });
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Course purchased successfully",
     });
   } catch (error) {
     return res.status(500).json({

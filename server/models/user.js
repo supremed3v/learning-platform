@@ -50,7 +50,16 @@ const schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Course",
       },
-      poster: String,
+
+      progress: {
+        type: Number,
+        default: 0,
+      },
+
+      completed: {
+        type: Boolean,
+        default: false,
+      },
     },
   ],
   createdAt: {
