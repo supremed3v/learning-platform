@@ -7,7 +7,7 @@ import parseData from "../utils/dataParser.js";
 
 export const registerUser = async (req, res, next) => {
   const { name, email, password } = req.body;
-  console.log(req.body, req.file);
+
   try {
     if (!name || !email || !password) {
       return res.status(400).json({
