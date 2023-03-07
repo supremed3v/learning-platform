@@ -88,3 +88,7 @@ export const getAccountStatus = async (req, res) => {
     success: true,
   });
 };
+
+export const sendStripeKey = async (req, res) => {
+  res.send(process.env.STRIPE_API_KEY);
+};

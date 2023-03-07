@@ -59,6 +59,21 @@ const schema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  paid_courses: [
+    {
+      course: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course",
+      },
+      price: {
+        type: Number,
+        required: true,
+      },
+      paymentIntent: {
+        type: String,
+      },
+    },
+  ],
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });
