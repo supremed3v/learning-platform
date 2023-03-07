@@ -8,12 +8,12 @@ export const createConnectAccount = async (req, res) => {
 
   if (!user.stripe_account_id) {
     const account = await myStripe.accounts.create({
-      type: "express",
+      type: "custom",
+      country: req.body.country,
+      email: user.email,
     });
-
-    console.log("ACCOUNT => ", account);
     user.stripe_account_id = account.id;
-    user.save();
+    await user.save();
   }
 
   // create account link based on account id (for frontend to complete onboarding)
