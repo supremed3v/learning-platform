@@ -24,16 +24,6 @@ const schema = new mongoose.Schema({
     enum: ["user", "admin", "instructor"],
     default: "user",
   },
-  subscription: {
-    id: {
-      type: String,
-      default: "free",
-    },
-    status: {
-      type: String,
-      default: "active",
-    },
-  },
   avatar: {
     public_id: {
       type: String,
@@ -43,6 +33,9 @@ const schema = new mongoose.Schema({
       type: String,
       required: true,
     },
+  },
+  stripe_account_id: {
+    type: String,
   },
   playList: [
     {
