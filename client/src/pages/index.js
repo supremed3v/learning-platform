@@ -4,10 +4,13 @@ import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import Hero from "@/components/Hero";
 import Search from "@/components/Search";
+import CoursesLayout from "@/components/CoursesLayout";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function Home({ data }) {
+  const { courses } = data;
+  console.log(courses);
   return (
     <>
       <Head>
@@ -18,6 +21,17 @@ export default function Home() {
       </Head>
       <Hero />
       <Search />
+      <CoursesLayout courses={courses} />
     </>
   );
 }
+
+export const getServerSideProps = async () => {
+  const res = await fetch("http://localhost:8000/api/v1/course");
+  const data = await res.json();
+  return {
+    props: {
+      data,
+    },
+  };
+};

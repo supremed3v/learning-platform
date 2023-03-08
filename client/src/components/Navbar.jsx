@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-const Navbar = () => {
+const Navbar = ({ data }) => {
   const [scroll, setScroll] = useState(false);
 
   useEffect(() => {
