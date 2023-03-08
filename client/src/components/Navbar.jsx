@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import Link from "next/link";
 const Navbar = () => {
   const [scroll, setScroll] = useState(false);
 
@@ -17,11 +17,40 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const navLinks = [
+    {
+      title: "Home",
+      path: "/",
+    },
+    {
+      title: "Courses",
+      path: "/courses",
+    },
+    {
+      title: "Programs",
+      path: "/programs",
+    },
+    {
+      title: "Professional Education",
+      path: "/professional-education",
+    },
+    {
+      title: "Admissions",
+      path: "/addmissions",
+    },
+    {
+      title: "Testimonials",
+      path: "/testimonials",
+    },
+  ];
+
   return (
     <div
       className={` flex p-5  items-center fixed ${
-        scroll ? "bg-white shadow-md" : "bg-transparent"
-      } w-full z-10 max-w-7xl`}
+        scroll
+          ? "bg-yellow-500 shadow-md animate transition-all ease-in-out duration-500"
+          : "bg-transparent"
+      } w-full z-10 max-w-full`}
     >
       <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
         <svg
@@ -37,27 +66,38 @@ const Navbar = () => {
           <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
         </svg>
         <span className="ml-3 text-xl text-tertiary">E-</span>
-        <span className="text-xl text-quaternary">Learn</span>
+        <span className="text-xl text-tertiary">Learn</span>
       </a>
-      <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center w-full">
-        <a className="mr-5 cursor-pointer hover:text-tertiary animate transition-all ease-in-out">
-          First Link
-        </a>
-        <a className="mr-5 cursor-pointer hover:text-tertiary animate transition-all ease-in-out">
-          Second Link
-        </a>
-        <a className="mr-5 cursor-pointer hover:text-tertiary animate transition-all ease-in-out">
-          Third Link
-        </a>
-        <a className="mr-5 cursor-pointer hover:text-tertiary animate transition-all ease-in-out">
-          Fourth Link
-        </a>
+      <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center ml-20 text-base justify-center w-full">
+        {navLinks.map((link, index) => (
+          <Link
+            href={link.path}
+            key={index}
+            className={`mr-5 cursor-pointer ${
+              scroll
+                ? "text-white hover:text-tertiary"
+                : "text-primary  hover:text-purple-900"
+            } animate transition-all ease-in-out font-medium px-4 `}
+          >
+            {link.title}
+          </Link>
+        ))}
       </nav>
       <button
-        className="group inline-flex items-center bg-primary border-0 py-1 px-3 focus:outline-none 
-        hover:bg-tertiary rounded text-base mt-4 md:mt-0 text-white animate transition-all ease-in-out"
+        className={`group inline-flex items-center border-0 py-1 px-3 focus:outline-none 
+      hover:bg-primary rounded text-base ${
+        scroll ? "text-white" : "text-primary"
+      } mt-4 md:mt-0 animate transition-all ease-in-out
+      ml-4`}
       >
         Login
+      </button>
+      <button
+        className={`group inline-flex items-center bg-primary border-0 py-1 px-3 focus:outline-none 
+        hover:bg-tertiary rounded text-base text-white mt-4 md:mt-0 animate transition-all ease-in-out
+        ml-4`}
+      >
+        Register
         <svg
           fill="none"
           stroke="currentColor"
