@@ -27,7 +27,7 @@ export default function Home({ data }) {
 }
 
 export const getServerSideProps = async () => {
-  const res = await fetch("http://localhost:8000/api/v1/course");
+  const res = await fetch("http://localhost:3000/api/v1/course");
   const data = await res.json();
   return {
     props: {

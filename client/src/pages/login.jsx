@@ -3,14 +3,16 @@ import Head from "next/head";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { useAuth } from "@/context/AuthContext";
 
 const login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUser, user } = useAuth();
 
   const handleLogin = async () => {
     const { data } = await toast.promise(
-      axios.post("http://localhost:8000/api/v1/login", { email, password }),
+      axios.post("http://localhost:3000/api/v1/login", { email, password }),
       {
         pending: "Logging in...",
         success: "Logged in successfully",
@@ -18,7 +20,11 @@ const login = () => {
       }
     );
     console.log(data);
+    if (data) {
+      setUser(data.user);
+    }
   };
+  console.log(user);
 
   return (
     <section className="h-screen py-20">
