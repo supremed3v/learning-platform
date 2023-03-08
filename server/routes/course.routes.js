@@ -16,7 +16,7 @@ const router = express.Router();
 
 router
   .route("/course")
-  .post(authCheck, adminCheck("admin", "instructor"), singleFile, createCourse)
+  .post(authCheck, singleFile, createCourse)
   .get(getCourses);
 
 router

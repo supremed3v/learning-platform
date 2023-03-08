@@ -19,7 +19,7 @@ const Search = () => {
             name="q"
             className="py-2 text-sm text-white bg-gray-300 rounded-md pl-10 focus:outline-none focus:bg-gray-400 focus:text-white"
             placeholder="Search..."
-            autocomplete="off"
+            autoComplete="off"
           />
         </div>
         <div className="relative text-gray-600 focus-within:text-gray-400 mr-2">
@@ -36,7 +36,7 @@ const Search = () => {
             name="q"
             className="py-2 text-sm text-white bg-gray-300 rounded-md pl-10 focus:outline-none focus:bg-gray-400 focus:text-white"
             placeholder="Search..."
-            autocomplete="off"
+            autoComplete="off"
           />
         </div>
       </div>

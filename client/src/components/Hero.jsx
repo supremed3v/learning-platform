@@ -31,6 +31,7 @@ const Hero = () => {
             width={720}
             height={600}
             className="object-cover object-center rounded"
+            priority={true}
           />
         </div>
       </div>
