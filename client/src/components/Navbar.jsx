@@ -83,7 +83,8 @@ const Navbar = ({ data }) => {
           </Link>
         ))}
       </nav>
-      <button
+      <Link
+        href="/login"
         className={`group inline-flex items-center border-0 py-1 px-3 focus:outline-none 
       hover:bg-primary rounded text-base ${
         scroll ? "text-white" : "text-primary"
@@ -91,7 +92,7 @@ const Navbar = ({ data }) => {
       ml-4`}
       >
         Login
-      </button>
+      </Link>
       <button
         className={`group inline-flex items-center bg-primary border-0 py-1 px-3 focus:outline-none 
         hover:bg-tertiary rounded text-base text-white mt-4 md:mt-0 animate transition-all ease-in-out
