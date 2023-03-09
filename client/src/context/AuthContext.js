@@ -27,6 +27,22 @@ export const AuthProvider = ({ children }) => {
     loadUser();
   }, []);
 
+  const logout = async () => {
+    try {
+      const res = await fetch("http://localhost:3000/api/v1/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      setUser(null);
+      setIsAuthenticated(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -34,6 +50,7 @@ export const AuthProvider = ({ children }) => {
         setUser,
         isAuthenticated,
         setIsAuthenticated,
+        logout,
       }}
     >
       {children}

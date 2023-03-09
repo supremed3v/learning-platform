@@ -4,11 +4,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/router";
 
 const login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setUser, user } = useAuth();
+  const router = useRouter();
 
   const handleLogin = async () => {
     const { data } = await toast.promise(
@@ -20,8 +22,9 @@ const login = () => {
       }
     );
     console.log(data);
-    if (data) {
+    if (data && data.user) {
       setUser(data.user);
+      router.push("/");
     }
   };
   console.log(user);
