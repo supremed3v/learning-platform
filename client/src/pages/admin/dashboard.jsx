@@ -19,7 +19,7 @@ const dashboard = () => {
         <title>Dashboard - E-learning Platform</title>
       </Head>
       <Layout criteria={true}>
-        <div className="container ml-5 px-19 py-10 pt-40 mx-auto">
+        <div className="container px-20 ml-10 py-10 pt-4 mx-auto">
           {courses.map((course) => (
             <div className="flex flex-wrap -m-4" key={course._id}>
               <Link
