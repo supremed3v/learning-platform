@@ -1,12 +1,61 @@
-import React from "react";
-import { AiOutlinePlayCircle } from "react-icons/ai";
+import AdminSidebar from "@/components/AdminSidebar";
+import Head from "next/head";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import CoursesLayout from "@/components/CoursesLayout";
 import Link from "next/link";
+import { AiOutlinePlayCircle } from "react-icons/ai";
+const dashboard = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen(!isOpen);
+  const [courses, setCourses] = useState([]);
 
-const CoursesLayout = ({ courses }) => {
+  useEffect(() => {
+    axios.get("http://localhost:3000/api/v1/courses").then((res) => {
+      setCourses(res.data.courses);
+    });
+  }, []);
+
+  console.log(courses);
+
   return (
-    <section className="text-gray-600 body-font">
-      <h1 className="text-primary text-center text-6xl">Top Rated Courses</h1>
-      <div className="container px-5 py-10 mx-auto">
+    <div>
+      <Head>
+        <title>Dashboard - E-learning Platform</title>
+      </Head>
+      <section
+        className={`relative flex h-screen pt-24 min-h-full items-start float-left `}
+      >
+        <AdminSidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+        <button
+          className={`mt-10 inline-block rounded bg-blue-600 px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg ${
+            isOpen && "ml-64"
+          } `}
+          data-te-sidenav-toggle-ref
+          data-te-target="#sidenav-8"
+          aria-controls="#sidenav-8"
+          aria-haspopup="true"
+          onClick={() => {
+            toggle();
+          }}
+        >
+          <span className="block [&>svg]:h-5 [&>svg]:w-5 [&>svg]:text-white">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="h-5 w-5"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </span>
+        </button>
+      </section>
+      <div className="container ml-5 px-19 py-10 pt-40 mx-auto">
         {courses.map((course) => (
           <div className="flex flex-wrap -m-4" key={course._id}>
             <Link
@@ -81,8 +130,7 @@ const CoursesLayout = ({ courses }) => {
           </div>
         ))}
       </div>
-    </section>
+    </div>
   );
 };
-
-export default CoursesLayout;
+export default dashboard;

@@ -9,7 +9,7 @@ export default function App({ Component, pageProps }) {
       <AuthProvider>
         <Navbar />
         <Component {...pageProps} />
-        <Footer />
+        {/* <Footer /> */}
       </AuthProvider>
     </>
   );

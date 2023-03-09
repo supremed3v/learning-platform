@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-const Navbar = ({ data }) => {
+import { useAuth } from "@/context/AuthContext";
+const Navbar = () => {
   const [scroll, setScroll] = useState(false);
 
   useEffect(() => {
@@ -12,10 +13,14 @@ const Navbar = ({ data }) => {
         setScroll(false);
       }
     };
-    window.addEventListener("scroll", handleScroll);
+    if (window.location.pathname === "/") {
+      window.addEventListener("scroll", handleScroll);
+    }
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const { user } = useAuth();
 
   const navLinks = [
     {
@@ -83,34 +88,83 @@ const Navbar = ({ data }) => {
           </Link>
         ))}
       </nav>
-      <Link
-        href="/login"
-        className={`group inline-flex items-center border-0 py-1 px-3 focus:outline-none 
+      {user && user.role === "admin" && (
+        <div>
+          <Link href="/admin/dashboard">
+            <button
+              className={`mr-5 cursor-pointer ${
+                scroll
+                  ? "text-white hover:text-tertiary"
+                  : "text-primary  hover:text-purple-900"
+              } animate transition-all ease-in-out font-bold px-4 w-full`}
+            >
+              Admin Dashboard
+            </button>
+          </Link>
+        </div>
+      )}
+      {user && user.role === "user" && (
+        <div>
+          <Link href="/user/dashboard">
+            <button
+              className={`mr-5 cursor-pointer ${
+                scroll
+                  ? "text-white hover:text-tertiary"
+                  : "text-primary  hover:text-purple-900"
+              } animate transition-all ease-in-out font-bold px-4`}
+            >
+              Learn Now
+            </button>
+          </Link>
+        </div>
+      )}
+      {user && user.role === "instructor" && (
+        <div>
+          <Link href="/instructor/dashboard">
+            <button
+              className={`mr-5 cursor-pointer ${
+                scroll
+                  ? "text-white hover:text-tertiary"
+                  : "text-primary  hover:text-purple-900"
+              } animate transition-all ease-in-out font-bold px-4`}
+            >
+              Instructor Dashboard
+            </button>
+          </Link>
+        </div>
+      )}
+      {!user && (
+        <>
+          <Link
+            href="/login"
+            className={`group inline-flex items-center border-0 py-1 px-3 focus:outline-none 
       hover:bg-primary rounded text-base ${
         scroll ? "text-white" : "text-primary"
       } mt-4 md:mt-0 animate transition-all ease-in-out
       ml-4`}
-      >
-        Login
-      </Link>
-      <button
-        className={`group inline-flex items-center bg-primary border-0 py-1 px-3 focus:outline-none 
+          >
+            Login
+          </Link>
+          <button
+            className={`group inline-flex items-center bg-primary border-0 py-1 px-3 focus:outline-none 
         hover:bg-tertiary rounded text-base text-white mt-4 md:mt-0 animate transition-all ease-in-out
         ml-4`}
-      >
-        Register
-        <svg
-          fill="none"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          className="w-4 h-4 ml-1"
-          viewBox="0 0 24 24"
-        >
-          <path d="M5 12h14M12 5l7 7-7 7"></path>
-        </svg>
-      </button>
+          >
+            Register
+            <svg
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              className="w-4 h-4 ml-1"
+              viewBox="0 0 24 24"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        </>
+      )}
     </div>
   );
 };
