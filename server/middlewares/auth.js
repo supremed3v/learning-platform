@@ -26,9 +26,9 @@ export const authCheck = async (req, res, next) => {
 export const adminCheck = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      return res.status(401).json({
+      return res.status(403).json({
         success: false,
-        message: "Unauthorized",
+        message: `Unauthorized. ${req.user.role} is not allowed to access this route`,
       });
     }
     next();

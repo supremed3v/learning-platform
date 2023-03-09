@@ -120,6 +120,21 @@ export const getCourses = async (req, res) => {
   }
 };
 
+export const getAllCourses = async (req, res) => {
+  try {
+    const courses = await Course.find().populate("instructor", "name");
+
+    res.status(200).json({
+      success: true,
+      courses,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
 export const deleteLecture = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);

@@ -6,6 +6,7 @@ import {
   buyCourse,
   createCourse,
   deleteLecture,
+  getAllCourses,
   getCourses,
   updateLecture,
 } from "../controllers/courseController.js";
@@ -18,6 +19,8 @@ router
   .route("/course")
   .post(authCheck, singleFile, createCourse)
   .get(getCourses);
+
+router.route("/courses").get(authCheck, adminCheck("admin"), getAllCourses);
 
 router
   .route("/course/:id/lecture")
