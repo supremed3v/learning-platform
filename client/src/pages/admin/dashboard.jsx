@@ -5,6 +5,7 @@ import axios from "axios";
 import Link from "next/link";
 import { AiOutlinePlayCircle } from "react-icons/ai";
 import Layout from "@/components/Layout";
+import DashboardLayout from "@/components/DashboardLayout";
 const dashboard = () => {
   useEffect(() => {
     axios.get("http://localhost:3000/api/v1/courses").then((res) => {
@@ -20,7 +21,7 @@ const dashboard = () => {
       </Head>
       <Layout criteria={true}>
         <div className="container px-20 ml-10 py-10 pt-4 mx-auto">
-          <h1>Dashboard</h1>
+          <DashboardLayout />
         </div>
       </Layout>
     </div>
