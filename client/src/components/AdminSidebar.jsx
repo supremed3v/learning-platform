@@ -6,7 +6,7 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
       id="sidenav-8"
       className={`absolute top-20 left-0 z-[1035] h-full w-60 -translate-x-full overflow-hidden bg-white shadow-[0_4px_12px_0_rgba(0,0,0,0.07),_0_2px_4px_rgba(0,0,0,0.05)] ${
         isOpen ? `translate-x-0` : ``
-      } dark:bg-zinc-800`}
+      } dark:bg-zinc-800 translate transition-all ease-in-out duration-500`}
       data-te-sidenav-init
       data-te-sidenav-hidden="false"
       data-te-sidenav-position="absolute"
