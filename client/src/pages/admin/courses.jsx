@@ -17,7 +17,9 @@ const courses = () => {
       <Head>
         <title>Courses - E-learning Platform</title>
       </Head>
-
+      <h1 className="text-center border-b-2 text-secondary font-bold text-6xl py-6">
+        Courses
+      </h1>
       <div className="container px-20 ml-10 py-10 pt-4 mx-auto">
         {courses.map((course) => (
           <div className="flex flex-wrap mt-4" key={course._id}>

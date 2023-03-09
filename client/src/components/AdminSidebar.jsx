@@ -10,7 +10,7 @@ import {
   MdOutlineSettings,
   MdOutlineLogout,
 } from "react-icons/md";
-import { CgProfile } from "react-icons/cg";
+import { CgHome } from "react-icons/cg";
 import { FaRegComments } from "react-icons/fa";
 import { BiMessageSquareDots } from "react-icons/bi";
 
@@ -64,6 +64,12 @@ function AdminSidebar() {
         >
           <GiHamburgerMenu className="block h-6 w-6" aria-hidden="true" />
         </button>
+        <Link
+          href="/"
+          className="absolute top-4 right-16 inline-flex items-center peer justify-center rounded-md p-2 text-gray-800 hover:bg-gray-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white group"
+        >
+          <CgHome className="block h-6 w-6" aria-hidden="true" />
+        </Link>
         <div
           className={`p-6 w-1/2 h-screen bg-white z-20 fixed top-0 -left-96 lg:left-0 lg:w-60  peer-focus:left-0 peer:transition ${
             !isOpen && "hidden"

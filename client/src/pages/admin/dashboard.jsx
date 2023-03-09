@@ -1,19 +1,10 @@
-import AdminSidebar from "@/components/AdminSidebar";
 import Head from "next/head";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
-import { AiOutlinePlayCircle } from "react-icons/ai";
 import Layout from "@/components/Layout";
 import DashboardLayout from "@/components/DashboardLayout";
 const dashboard = () => {
-  useEffect(() => {
-    axios.get("http://localhost:3000/api/v1/courses").then((res) => {
-      setCourses(res.data.courses);
-    });
-  }, []);
-  const [courses, setCourses] = useState([]);
-
   return (
     <div>
       <Head>
