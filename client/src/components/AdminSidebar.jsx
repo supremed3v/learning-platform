@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Disclosure } from "@headlessui/react";
+import Link from "next/link";
 import {
   MdOutlineSpaceDashboard,
   MdOutlineAnalytics,
@@ -15,6 +16,44 @@ import { BiMessageSquareDots } from "react-icons/bi";
 
 function AdminSidebar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [active, setActive] = useState(
+    typeof window !== "undefined" ? window.location.pathname : ""
+  );
+
+  const openPage = (url) => {
+    setActive(url);
+  };
+
+  const links = [
+    {
+      name: "Dashboard",
+      icon: (
+        <MdOutlineSpaceDashboard className="text-2xl text-gray-600 group-hover:text-white " />
+      ),
+      href: "/admin/dashboard",
+    },
+    {
+      name: "Courses",
+      icon: (
+        <MdOutlineAnalytics className="text-2xl text-gray-600 group-hover:text-white " />
+      ),
+      href: "/admin/courses",
+    },
+    {
+      name: "Integrations",
+      icon: (
+        <MdOutlineIntegrationInstructions className="text-2xl text-gray-600 group-hover:text-white " />
+      ),
+      href: "/admin/integrations",
+    },
+    {
+      name: "More",
+      icon: (
+        <MdOutlineMoreHoriz className="text-2xl text-gray-600 group-hover:text-white " />
+      ),
+      href: "/admin/more",
+    },
+  ];
 
   return (
     <div>
@@ -35,42 +74,25 @@ function AdminSidebar() {
               Admin Dashboard
             </h1>
             <div className=" my-4 border-b border-gray-100 pb-4">
-              <div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-                <MdOutlineSpaceDashboard className="text-2xl text-gray-600 group-hover:text-white " />
-                <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
-                  Dashboard
-                </h3>
-              </div>
-              <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-                <CgProfile className="text-2xl text-gray-600 group-hover:text-white " />
-                <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
-                  Profile
-                </h3>
-              </div>
-              <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-                <FaRegComments className="text-2xl text-gray-600 group-hover:text-white " />
-                <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
-                  Comments
-                </h3>
-              </div>
-              <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-                <MdOutlineAnalytics className="text-2xl text-gray-600 group-hover:text-white " />
-                <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
-                  Analytics
-                </h3>
-              </div>
-              <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-                <BiMessageSquareDots className="text-2xl text-gray-600 group-hover:text-white " />
-                <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
-                  Messages
-                </h3>
-              </div>
-              <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-                <MdOutlineIntegrationInstructions className="text-2xl text-gray-600 group-hover:text-white " />
-                <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
-                  Integration
-                </h3>
-              </div>
+              {links.map((link) => (
+                <Link
+                  href={link.href}
+                  className={`flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto ${
+                    link.href === active && "bg-gray-900"
+                  } `}
+                  onClick={() => openPage(link.href)}
+                  id={link.href}
+                >
+                  {link.icon}
+                  <h3
+                    className={`text-base text-gray-800 group-hover:text-white ${
+                      link.href === active && "text-white"
+                    } font-semibold`}
+                  >
+                    {link.name}
+                  </h3>
+                </Link>
+              ))}
             </div>
             {/* setting  */}
             {/* <div className=" my-4 border-b border-gray-100 pb-4">
