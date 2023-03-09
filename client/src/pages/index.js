@@ -5,6 +5,7 @@ import styles from "@/styles/Home.module.css";
 import Hero from "@/components/Hero";
 import Search from "@/components/Search";
 import CoursesLayout from "@/components/CoursesLayout";
+import Layout from "@/components/Layout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,9 +20,11 @@ export default function Home({ data }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Hero />
-      <Search />
-      <CoursesLayout courses={courses} />
+      <Layout criteria={false}>
+        <Hero />
+        <Search />
+        <CoursesLayout courses={courses} />
+      </Layout>
     </>
   );
 }

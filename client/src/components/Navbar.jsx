@@ -54,7 +54,7 @@ const Navbar = () => {
       className={` flex p-5  items-center fixed ${
         scroll
           ? "bg-yellow-500 shadow-md animate transition-all ease-in-out duration-500"
-          : "bg-transparent"
+          : "bg-transparent shadow-md"
       } w-full z-10 max-w-full`}
     >
       <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
