@@ -8,6 +8,7 @@ import {
   becomeInstructor,
   resetPassword,
   forgotPassword,
+  registerInstructor,
 } from "../controllers/userController.js";
 import singleFile from "../middlewares/singleFile.js";
 import { authCheck } from "../middlewares/auth.js";
@@ -21,6 +22,7 @@ router.route("/login").post(loginUser);
 router.route("/logout").post(logoutUser);
 
 router.route("/me").get(authCheck, getUser);
+router.route("/register-instructor").post(singleFile, registerInstructor);
 
 // Yet to be tested
 router.route("/me/update").put(authCheck, singleFile, updateUser);
