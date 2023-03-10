@@ -145,7 +145,8 @@ const Navbar = () => {
           >
             Login
           </Link>
-          <button
+          <Link
+            href="/register"
             className={`group inline-flex items-center bg-primary border-0 py-1 px-3 focus:outline-none 
         hover:bg-tertiary rounded text-base text-white mt-4 md:mt-0 animate transition-all ease-in-out
         ml-4`}
@@ -162,7 +163,7 @@ const Navbar = () => {
             >
               <path d="M5 12h14M12 5l7 7-7 7"></path>
             </svg>
-          </button>
+          </Link>
         </>
       )}
     </div>
