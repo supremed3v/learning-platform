@@ -4,7 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import Layout from "@/components/Layout";
 import DashboardLayout from "@/components/DashboardLayout";
-const dashboard = () => {
+const Dashboard = () => {
   return (
     <div>
       <Head>
@@ -18,4 +18,4 @@ const dashboard = () => {
     </div>
   );
 };
-export default dashboard;
+export default Dashboard;
