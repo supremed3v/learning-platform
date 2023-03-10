@@ -26,14 +26,6 @@ export const registerUser = async (req, res, next) => {
     }
     const file = req.file;
     const data = parseData(file);
-    console.log(data);
-
-    if (!data) {
-      return res.status(400).json({
-        success: false,
-        message: "Please upload a valid image",
-      });
-    }
 
     const result = await cloudinary.v2.uploader.upload(data.content, {
       folder: "avatars",
@@ -46,8 +38,8 @@ export const registerUser = async (req, res, next) => {
       email,
       password,
       avatar: {
-        public_id: result.public_id,
-        url: result.secure_url,
+        public_id: file ? result.public_id : "",
+        url: file ? result.secure_url : "",
       },
     });
 
@@ -286,64 +278,48 @@ export const resetPassword = async (req, res) => {
 export const registerInstructor = async (req, res) => {
   const { name, email, password } = req.body;
 
-  try {
-    if (!name) {
-      return res.status(400).json({
-        success: false,
-        message: "Please enter your name",
-      });
-    } else if (!email) {
-      return res.status(400).json({
-        success: false,
-        message: "Please enter your email",
-      });
-    } else {
-      return res.status(400).json({
-        success: false,
-        message: "Please enter your password",
-      });
-    }
-
-    const checkEmail = User.findOne({ email });
-
-    if (checkEmail) {
-      return res.status(400).json({
-        success: false,
-        message: "Email already exists",
-      });
-    }
-    const file = req.file;
-
-    if (!file) {
-      return res.status(400).json({
-        success: false,
-        message: "Please upload an image",
-      });
-    }
-
-    const data = parseData(file);
-
-    const result = await cloudinary.v2.uploader.upload(data.content, {
-      folder: "avatars",
-      crop: "scale",
-    });
-
-    const user = await User.create({
-      name,
-      email,
-      password,
-      role: "instructor",
-      avatar: {
-        public_id: result.public_id,
-        url: result.secure_url,
-      },
-    });
-
-    sendToken(user, 200, res);
-  } catch (error) {
-    return res.status(500).json({
+  if (!name || !email || !password) {
+    return res.status(400).json({
       success: false,
-      message: error.message,
+      message: "Please fill in all fields",
     });
   }
+
+  const checkEmail = User.findOne({ email });
+
+  if (checkEmail) {
+    return res.status(400).json({
+      success: false,
+      message: "Email already exists",
+    });
+  }
+
+  const file = req.file;
+
+  if (!file) {
+    return res.status(400).json({
+      success: false,
+      message: "Please upload an image",
+    });
+  }
+
+  const data = parseData(file);
+
+  const result = await cloudinary.v2.uploader.upload(data.content, {
+    folder: "avatars",
+    crop: "scale",
+  });
+
+  const user = await User.create({
+    name,
+    email,
+    password,
+    role: "instructor",
+    avatar: {
+      public_id: result.public_id,
+      url: result.secure_url,
+    },
+  });
+
+  sendToken(user, 200, res);
 };
