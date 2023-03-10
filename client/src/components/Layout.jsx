@@ -1,5 +1,5 @@
 import React from "react";
-import { AdminSideBar, Navbar, Footer } from "@/components";
+import { AdminSidebar, Navbar, Footer } from "@/components";
 
 const Layout = ({ children, criteria }) => {
   return (

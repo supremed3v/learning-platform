@@ -13,7 +13,7 @@ const Navbar = () => {
         setScroll(false);
       }
     };
-    if (window.location.pathname === "/") {
+    if (!window.location.pathname.includes("/admin")) {
       window.addEventListener("scroll", handleScroll);
     }
 
