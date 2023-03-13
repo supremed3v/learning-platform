@@ -287,13 +287,6 @@ export const registerInstructor = async (req, res) => {
 
   const checkEmail = User.findOne({ email });
 
-  if (checkEmail) {
-    return res.status(400).json({
-      success: false,
-      message: "Email already exists",
-    });
-  }
-
   const file = req.file;
 
   if (!file) {
@@ -310,7 +303,7 @@ export const registerInstructor = async (req, res) => {
     crop: "scale",
   });
 
-  const user = await User.create({
+  await User.create({
     name,
     email,
     password,
@@ -321,5 +314,8 @@ export const registerInstructor = async (req, res) => {
     },
   });
 
-  sendToken(user, 200, res);
+  res.status(200).json({
+    success: true,
+    message: "Registration successful",
+  });
 };
