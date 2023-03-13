@@ -1,46 +1,7 @@
 import { Layout } from "@/components";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
-
-import "react-toastify/dist/ReactToastify.css";
 const Register = () => {
-  const [values, setValues] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  const formValues = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async () => {
-    const formData = new FormData();
-    formData.append("name", values.name);
-    formData.append("email", values.email);
-    formData.append("password", values.password);
-    const { data } = await toast.promise(
-      axios.post("http://localhost:3000/api/v1/register", formData),
-      {
-        pending: "Loading...",
-        success: "Registration successful",
-        error: "Registration failed",
-      }
-    );
-    if (data.status === "success") {
-      setTimeout(() => {
-        toast.success("Redirecting to login page");
-        router.push("/login");
-      }, 2000);
-    } else {
-      toast.error(data.message);
-    }
-  };
-
   return (
     <Layout criteria={false}>
       <div className="container px-20 ml-10 py-40 pt-20 mx-auto">
