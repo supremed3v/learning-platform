@@ -138,7 +138,7 @@ const Navbar = () => {
           <Link
             href="/login"
             className={`group inline-flex items-center border-0 py-1 px-3 focus:outline-none 
-      hover:bg-primary rounded text-base ${
+      hover:bg-primary rounded text-base hover:text-white ${
         scroll ? "text-white" : "text-primary"
       } mt-4 md:mt-0 animate transition-all ease-in-out
       ml-4`}

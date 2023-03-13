@@ -1,7 +1,45 @@
 import { Layout } from "@/components";
-import React from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/router";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
+  const [values, setValues] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const formValues = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("email", values.email);
+    formData.append("password", values.password);
+    const { data } = await toast.promise(
+      axios.post("http://localhost:3000/api/v1/register", formData),
+      {
+        pending: "Loading...",
+        success: "Registration successful",
+        error: "Registration failed",
+      }
+    );
+    if (data.status === "success") {
+      setTimeout(() => {
+        toast.success("Redirecting to login page");
+        router.push("/login");
+      }, 2000);
+    } else {
+      toast.error(data.message);
+    }
+  };
   return (
     <Layout criteria={false}>
       <div className="container px-20 ml-10 py-20 pt-10 mx-auto">
@@ -23,6 +61,8 @@ const Register = () => {
                     type="text"
                     name="name"
                     className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    value={values.name}
+                    onChange={formValues}
                   />
                 </div>
               </div>
@@ -38,6 +78,8 @@ const Register = () => {
                     type="email"
                     name="email"
                     className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    value={values.email}
+                    onChange={formValues}
                   />
                 </div>
               </div>
@@ -53,6 +95,8 @@ const Register = () => {
                     type="password"
                     name="password"
                     className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    value={values.password}
+                    onChange={formValues}
                   />
                 </div>
               </div>
@@ -66,8 +110,10 @@ const Register = () => {
                 <div className="flex flex-col items-start">
                   <input
                     type="password"
-                    name="password_confirmation"
+                    name="confirmPassword"
                     className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    value={values.confirmPassword}
+                    onChange={formValues}
                   />
                 </div>
               </div>
@@ -79,8 +125,9 @@ const Register = () => {
                   Already registered?
                 </a>
                 <button
-                  type="submit"
                   className="inline-flex items-center px-4 py-2 ml-4 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false"
+                  type="button"
+                  onClick={handleSubmit}
                 >
                   Register
                 </button>
