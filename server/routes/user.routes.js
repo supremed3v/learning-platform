@@ -12,7 +12,11 @@ import {
 } from "../controllers/userController.js";
 import singleFile from "../middlewares/singleFile.js";
 import { authCheck } from "../middlewares/auth.js";
-import { removeCourse, userCourse } from "../controllers/courseController.js";
+import {
+  addToPlaylist,
+  removeCourse,
+  userCourse,
+} from "../controllers/courseController.js";
 
 const router = express.Router();
 
@@ -31,5 +35,6 @@ router.route("/me/my-courses/:id").delete(authCheck, removeCourse);
 router.route("/me/become-instructor").put(authCheck, becomeInstructor);
 router.route("/forgot-password").post(authCheck, forgotPassword);
 router.route("/reset-password/:token").put(resetPassword);
+router.route("/me/add-to-playlist").post(authCheck, addToPlaylist);
 
 export default router;

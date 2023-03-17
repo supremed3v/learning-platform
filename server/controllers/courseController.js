@@ -303,3 +303,23 @@ export const userCourse = async (req, res) => {
     });
   }
 };
+
+export const addToPlaylist = async (req, res) => {
+  const user = await User.findById(req.user._id);
+  const { courseId } = req.body;
+
+  if (user.playList.includes(courseId)) {
+    return res.status(400).json({
+      error: "Course already purchased",
+    });
+  } else {
+    user.playList.push({
+      course: courseId,
+    });
+    await user.save();
+    res.status(200).json({
+      success: true,
+      message: "Course purchased successfully",
+    });
+  }
+};

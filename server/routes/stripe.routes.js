@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   createBankAccount,
   createConnectAccount,
+  createPayout,
   getAccountStatus,
   getRequiredFields,
 } from "../controllers/stripeController.js";
@@ -16,5 +17,6 @@ router
 router.route("/stripe/get-required-fields").post(authCheck, getRequiredFields);
 router.route("/stripe/create-bank-account").post(authCheck, createBankAccount);
 router.route("/stripe/get-account-status").post(authCheck, getAccountStatus);
+router.route("/stripe/create-payment-intent").post(authCheck, createPayout);
 
 export default router;

@@ -126,3 +126,35 @@ export const createBankAccount = async (req, res) => {
     });
   }
 };
+
+export const createPayout = async (req, res) => {
+  const seller = await User.findById(req.body.sellerId).exec();
+
+  try {
+    const paymentIntent = await myStripe.paymentIntents.create({
+      amount: req.body.amount,
+      currency: "usd",
+      payment_method_types: ["card"],
+      application_fee_amount: Math.round((req.body.amount * 0.05) / 100), // 5% of the total amount
+      automatic_payment_methods: {
+        enabled: "true",
+      },
+      transfer_data: {
+        destination: seller.stripe_account_id,
+      },
+    });
+
+    const { client_secret } = paymentIntent;
+
+    res.status(200).json({
+      message: "Payout created",
+      client_secret,
+      success: true,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+      success: false,
+    });
+  }
+};
