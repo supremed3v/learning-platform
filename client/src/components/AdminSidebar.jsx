@@ -108,7 +108,7 @@ function AdminSidebar() {
                     link.href === active && "bg-gray-900"
                   } `}
                   onClick={() => openPage(link.href)}
-                  id={link.href}
+                  key={link.href}
                 >
                   {link.icon}
                   <h3
