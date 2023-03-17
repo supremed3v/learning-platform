@@ -8,7 +8,7 @@ import {
   MdOutlineAnalytics,
   MdOutlineIntegrationInstructions,
   MdOutlineMoreHoriz,
-  MdOutlineSettings,
+  MdPayment,
   MdOutlineLogout,
 } from "react-icons/md";
 import { CgHome } from "react-icons/cg";
@@ -53,6 +53,13 @@ function AdminSidebar() {
         <MdOutlineIntegrationInstructions className="text-2xl text-gray-600 group-hover:text-white " />
       ),
       href: "/admin/integrations",
+    },
+    {
+      name: "Payments",
+      icon: (
+        <MdPayment className="text-2xl text-gray-600 group-hover:text-white " />
+      ),
+      href: "/admin/payments",
     },
     {
       name: "More",

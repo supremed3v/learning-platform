@@ -6,7 +6,7 @@ const Layout = ({ children, criteria }) => {
     <div>
       {criteria ? <AdminSidebar /> : <Navbar />}
       {children}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
