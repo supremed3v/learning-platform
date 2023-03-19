@@ -11,7 +11,6 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home({ data }) {
   const { courses } = data;
-  console.log(courses);
   return (
     <>
       <Head>

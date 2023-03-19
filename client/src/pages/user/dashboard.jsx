@@ -17,7 +17,8 @@ const UserDashboard = () => {
   const openPage = (url) => {
     setActive(url);
   };
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  console.log(user);
   const navLinks = [
     {
       name: "Courses",
