@@ -10,7 +10,7 @@ const CoursesLayout = ({ courses }) => {
         {courses.map((course) => (
           <div className="flex flex-wrap -m-4" key={course._id}>
             <Link
-              href={`/courses/${course._id}`}
+              href={`/course/${course._id}`}
               className="group lg:w-1/4 md:w-1/2 p-4 w-full rounded shadow-md hover:bg-primary animate
                transition duration-200 ease-in-out"
             >

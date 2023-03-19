@@ -12,9 +12,12 @@ const UserCourses = () => {
             You have not enrolled in any course yet
           </h1>
           <div className="flex justify-center items-center">
-            <button className="mt-20 bg-blue-500 hover:bg-blue-700 text-white p-2 rounded ease-in-out animate transition-all">
+            <Link
+              href="/courses"
+              className="mt-20 bg-blue-500 hover:bg-blue-700 text-white p-2 rounded ease-in-out animate transition-all"
+            >
               Enroll Now
-            </button>
+            </Link>
           </div>
         </>
       )}
