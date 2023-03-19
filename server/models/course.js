@@ -70,6 +70,10 @@ const schema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  amount: {
+    type: Number,
+    required: true,
+  },
 });
 
 export const Course = mongoose.model("Course", schema);

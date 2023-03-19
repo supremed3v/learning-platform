@@ -4,12 +4,12 @@ import cloudinary from "cloudinary";
 import parseData from "../utils/dataParser.js";
 
 export const createCourse = async (req, res) => {
-  const { title, description, category } = req.body;
+  const { title, description, category, amount } = req.body;
 
   const instructor = req.user._id;
 
   try {
-    if (!title || !description || !category || !instructor) {
+    if (!title || !description || !category || !instructor || !amount) {
       return res.status(400).json({
         error: "All fields are required",
       });
@@ -38,6 +38,7 @@ export const createCourse = async (req, res) => {
         public_id: result.public_id,
         url: result.secure_url,
       },
+      amount,
     });
 
     res.status(201).json({
