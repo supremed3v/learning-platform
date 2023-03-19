@@ -29,14 +29,13 @@ app.use("/api/v1", userRoutes);
 app.use("/api/v1", courseRoutes);
 app.use("/api/v1", stripeRoutes);
 
+const server = app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 process.on("uncaughtException", (error) => {
   console.log("Uncaught Exception: ", error.message);
   console.log("Shutting down server due to uncaught exception");
   process.exit(1);
-});
-
-const server = app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
 });
 
 process.on("unhandledRejection", (error) => {
@@ -50,5 +49,12 @@ process.on("ValidationError", (error) => {
   console.log("Validation Error: ", error.message);
   server.close(() => {
     process.exit(1);
+  });
+});
+
+process.on("SIGTERM", () => {
+  console.log("SIGTERM RECEIVED. Shutting down gracefully");
+  server.close(() => {
+    console.log("Process terminated!");
   });
 });

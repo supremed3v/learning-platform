@@ -8,6 +8,7 @@ import {
   deleteLecture,
   getAllCourses,
   getCourses,
+  getSingleCourse,
   updateLecture,
 } from "../controllers/courseController.js";
 
@@ -21,6 +22,8 @@ router
   .get(getCourses);
 
 router.route("/courses").get(authCheck, adminCheck("admin"), getAllCourses);
+
+router.route("/single-course/:id").get(getSingleCourse);
 
 router
   .route("/course/:id/lecture")
