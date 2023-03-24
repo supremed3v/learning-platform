@@ -136,9 +136,6 @@ export const createPayout = async (req, res) => {
       currency: "usd",
       payment_method_types: ["card"],
       application_fee_amount: Math.round((req.body.amount * 0.05) / 100), // 5% of the total amount
-      automatic_payment_methods: {
-        enabled: "true",
-      },
       transfer_data: {
         destination: seller.stripe_account_id,
       },
