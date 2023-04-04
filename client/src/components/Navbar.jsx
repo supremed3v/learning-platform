@@ -43,10 +43,6 @@ const Navbar = () => {
       title: "Admissions",
       path: "/addmissions",
     },
-    {
-      title: "Testimonials",
-      path: "/testimonials",
-    },
   ];
 
   return (

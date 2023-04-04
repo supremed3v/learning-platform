@@ -9,8 +9,7 @@ import {
   Elements,
 } from "@stripe/react-stripe-js";
 import { useAuth } from "@/context/AuthContext";
-import { loadStripe } from "@stripe/stripe-js";
-import FAQ from "@/components/FAQ";
+import { loadStripe } from "@stripe/stripe-js"; 
 
 const customStyles = {
   content: {
