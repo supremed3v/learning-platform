@@ -15,7 +15,7 @@ import { CgHome } from "react-icons/cg";
 import { FaRegComments } from "react-icons/fa";
 import { BiMessageSquareDots } from "react-icons/bi";
 
-function AdminSidebar() {
+function Sidebar({links, title}) {
   const [isOpen, setIsOpen] = useState(false);
   const [active, setActive] = useState(
     typeof window !== "undefined" ? window.location.pathname : ""
@@ -32,43 +32,7 @@ function AdminSidebar() {
     setActive(url);
   };
 
-  const links = [
-    {
-      name: "Dashboard",
-      icon: (
-        <MdOutlineSpaceDashboard className="text-2xl text-gray-600 group-hover:text-white " />
-      ),
-      href: "/admin/dashboard",
-    },
-    {
-      name: "Courses",
-      icon: (
-        <MdOutlineAnalytics className="text-2xl text-gray-600 group-hover:text-white " />
-      ),
-      href: "/admin/courses",
-    },
-    {
-      name: "Integrations",
-      icon: (
-        <MdOutlineIntegrationInstructions className="text-2xl text-gray-600 group-hover:text-white " />
-      ),
-      href: "/admin/integrations",
-    },
-    {
-      name: "Payments",
-      icon: (
-        <MdPayment className="text-2xl text-gray-600 group-hover:text-white " />
-      ),
-      href: "/admin/payments",
-    },
-    {
-      name: "More",
-      icon: (
-        <MdOutlineMoreHoriz className="text-2xl text-gray-600 group-hover:text-white " />
-      ),
-      href: "/admin/more",
-    },
-  ];
+ 
 
   return (
     <div>
@@ -140,4 +104,4 @@ function AdminSidebar() {
   );
 }
 
-export default AdminSidebar;
+export default Sidebar;

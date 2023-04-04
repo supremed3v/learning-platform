@@ -1,16 +1,15 @@
 import React from "react";
-import { AdminSidebar, Navbar, Footer } from "@/components";
+import { Sidebar, Navbar, Footer } from "@/components";
 import { useAuth } from "@/context/AuthContext";
-import UserDashboard from "@/pages/user/dashboard";
-import InstructorDashboard from "@/pages/instructor/dashboard";
+import { instructorLinks, adminLinks, userLinks } from "@/dummyData/links";
 const Layout = ({ children, criteria }) => {
   const { user } = useAuth();
   console.log("user", user)
-  let dashboard = <UserDashboard/>;
+  let dashboard = <Sidebar links={userLinks} title={"User Dashboard"} />;
   if (user && user.role === "admin") {
-    dashboard = <AdminSidebar/>;
+    dashboard = <Sidebar links={adminLinks} title={"Admin Dashboard"} />;
   } else if (user && user.role === "instructor") {
-    dashboard = <InstructorDashboard/>;
+    dashboard = <Sidebar links={instructorLinks} title={"Instructor Dashboard"} />;
   }
   return (
     <div>

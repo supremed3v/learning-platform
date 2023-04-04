@@ -1,6 +1,6 @@
-import AdminSidebar from "./AdminSidebar";
+import Sidebar from "./Sidebar";
 import Layout from "./Layout";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
-export { AdminSidebar, Layout, Navbar, Footer };
+export { Sidebar, Layout, Navbar, Footer };
