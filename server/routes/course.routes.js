@@ -40,6 +40,6 @@ router
 
 // Yet to be tested
 
-router.route("/course/buy/:id").post(authCheck, adminCheck("user"), buyCourse);
+router.route("/course/buy/:id").post(authCheck, adminCheck("user","admin"), buyCourse);
 
 export default router;

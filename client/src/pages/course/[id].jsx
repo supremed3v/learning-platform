@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-import { useRouter } from "next/router";
+import Modal from 'react-modal'
 import axios from "axios";
 import Layout from "@/components/Layout";
 import {
@@ -11,6 +11,19 @@ import {
 import { useAuth } from "@/context/AuthContext";
 import { loadStripe } from "@stripe/stripe-js";
 import FAQ from "@/components/FAQ";
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    width: '50%',
+    height: '21%',
+  },
+};
 
 function FormFunction({ sellerId, course }) {
   const { user } = useAuth();
@@ -24,6 +37,19 @@ function FormFunction({ sellerId, course }) {
 
   const changeTab = (tab) => {
     setTab(tab);
+  }
+
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  function afterOpenModal (){
+
   }
 
 
@@ -72,6 +98,7 @@ function FormFunction({ sellerId, course }) {
       console.log(error);
     }
   };
+  // ref={payBtn} onClick={submitHandler} 
   return (
     <div>
       <section className="text-gray-600 body-font overflow-hidden">
@@ -127,8 +154,7 @@ function FormFunction({ sellerId, course }) {
                   user && user.role !== "instructor" && 
                   "admin" ? (
                 <>
-                <CardElement />
-          <button ref={payBtn} onClick={submitHandler} className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+          <button onClick={openModal} className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
             Pay
           </button>
                 </>
@@ -148,6 +174,22 @@ function FormFunction({ sellerId, course }) {
           </div>
         </div>
       </section>
+      <Modal
+      isOpen={modalIsOpen}
+      onAfterOpen={afterOpenModal}
+      onRequestClose={closeModal}
+      style={customStyles}
+      contentLabel="Example Modal"
+      >
+        <div>
+          <CardElement />
+          <div className="flex px-5 py-5 justify-around">
+
+          <button className=" text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded" ref={payBtn} onClick={submitHandler}>Pay</button>
+        <button onClick={closeModal} className=" text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded" >Close</button>
+          </div>
+        </div>
+      </Modal>
       {/* <FAQ/> */}
     </div>
   );
