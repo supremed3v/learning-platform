@@ -29,7 +29,7 @@ export const createCourse = async (req, res) => {
       crop: "scale",
     });
 
-    await Course.create({
+    const course = await Course.create({
       title,
       description,
       category,
@@ -40,6 +40,15 @@ export const createCourse = async (req, res) => {
       },
       amount,
     });
+
+    const user = await User.findById(instructor);
+
+    user.paid_courses.push({
+      course: course._id,
+      amount: course.amount,
+    })
+
+    await user.save();
 
     res.status(201).json({
       success: true,
