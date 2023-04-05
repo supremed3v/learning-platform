@@ -6,11 +6,15 @@ import Hero from "@/components/Hero";
 import Search from "@/components/Search";
 import CoursesLayout from "@/components/CoursesLayout";
 import Layout from "@/components/Layout";
+import { useAuth } from "@/context/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home({ data }) {
+  const { user } = useAuth();
   const { courses } = data;
+  console.log(user)
+
   return (
     <>
       <Head>
