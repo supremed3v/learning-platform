@@ -359,3 +359,29 @@ export const getSingleCourse = async (req, res) => {
     });
   }
 };
+
+export const getInstructorCourses = async (req, res) => {
+  const instructor = await User.findById(req.user._id);
+
+  try {
+    const courses = await Course.find({ instructor: instructor._id })
+
+    res.status(200).json({
+      success: true,
+      courses,
+    });
+
+    if(!courses){
+      return res.status(400).json({
+        error: "No courses found",
+      });
+    }
+
+  } catch(error){
+    res.status(500).json({
+      error: error.message,
+      success: false,
+    });
+  }
+
+}

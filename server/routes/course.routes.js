@@ -8,6 +8,7 @@ import {
   deleteLecture,
   getAllCourses,
   getCourses,
+  getInstructorCourses,
   getSingleCourse,
   updateLecture,
 } from "../controllers/courseController.js";
@@ -41,5 +42,6 @@ router
 // Yet to be tested
 
 router.route("/course/buy/:id").post(authCheck, adminCheck("user","admin"), buyCourse);
+router.route('/instructor/courses').get(authCheck, adminCheck("instructor"), getInstructorCourses)
 
 export default router;
