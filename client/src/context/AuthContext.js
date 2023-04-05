@@ -35,7 +35,6 @@ export const AuthProvider = ({ children }) => {
           "Content-Type": "application/json",
         },
       });
-      const data = await res.json();
       setUser(null);
       setIsAuthenticated(false);
     } catch (error) {

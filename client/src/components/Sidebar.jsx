@@ -4,16 +4,9 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import {
-  MdOutlineSpaceDashboard,
-  MdOutlineAnalytics,
-  MdOutlineIntegrationInstructions,
-  MdOutlineMoreHoriz,
-  MdPayment,
   MdOutlineLogout,
 } from "react-icons/md";
 import { CgHome } from "react-icons/cg";
-import { FaRegComments } from "react-icons/fa";
-import { BiMessageSquareDots } from "react-icons/bi";
 
 function Sidebar({links, title}) {
   const [isOpen, setIsOpen] = useState(false);
@@ -62,7 +55,7 @@ function Sidebar({links, title}) {
         >
           <div className="flex flex-col justify-start item-center">
             <h1 className="text-base text-center cursor-pointer font-bold text-blue-900 border-b border-gray-100 pb-4 w-full">
-              Admin Dashboard
+              {title}
             </h1>
             <div className=" my-4 border-b border-gray-100 pb-4">
               {links.map((link) => (
