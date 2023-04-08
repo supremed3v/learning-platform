@@ -1,4 +1,5 @@
 import { Layout } from '@/components'
+import CourseForm from '@/components/Forms/CourseForm'
 import React from 'react'
 
 
@@ -7,7 +8,7 @@ const CreateCourse = () => {
     <div>
         <Layout criteria={true}>
         <div className="container px-20 ml-10 mt-20 pt-4 mx-auto">
-            <h1>Create course</h1>
+            <CourseForm/>
         </div>
         </Layout>
     </div>
