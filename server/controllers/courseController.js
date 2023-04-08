@@ -6,10 +6,18 @@ import parseData from "../utils/dataParser.js";
 export const createCourse = async (req, res) => {
   const { title, description, category, amount } = req.body;
 
-  const instructor = req.user._id;
+  
+
+  const instructor = await User.findById(req.user._id);
+
+  if (!instructor) {
+    return res.status(400).json({
+      error: "Instructor not found",
+    });
+  }
 
   try {
-    if (!title || !description || !category || !instructor || !amount) {
+    if (!title || !description || !category || !amount) {
       return res.status(400).json({
         error: "All fields are required",
       });
@@ -33,7 +41,7 @@ export const createCourse = async (req, res) => {
       title,
       description,
       category,
-      instructor,
+      instructor: instructor._id,
       poster: {
         public_id: result.public_id,
         url: result.secure_url,
@@ -41,14 +49,13 @@ export const createCourse = async (req, res) => {
       amount,
     });
 
-    const user = await User.findById(instructor);
 
-    user.paid_courses.push({
+    instructor.paid_courses.push({
       course: course._id,
-      amount: course.amount,
+      price: course.amount,
     })
 
-    await user.save();
+    await instructor.save();
 
     res.status(201).json({
       success: true,
