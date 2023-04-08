@@ -27,7 +27,7 @@ export default function InstructorCourses(){
       </h1>
       <div className="container px-20 ml-10 py-10 pt-4 mx-auto">
         {
-            courses > 0 ? (
+            courses.length > 0 ? (
                 courses.map((course) => (
                     <div className="flex flex-wrap mt-4" key={course._id}>
                       <Link
@@ -60,7 +60,7 @@ export default function InstructorCourses(){
                           >
                             by {course.instructor.name}
                           </h3>
-                          <p className="mt-1 group-hover:text-gray-200">$16.00</p>
+                          <p className="mt-1 group-hover:text-gray-200">${course.amount}</p>
                           <div className="flex items-center flex-wrap">
                             <button className="text-indigo-500 group-hover:text-gray-300 inline-flex items-center md:mb-2 lg:mb-0">
                               Learn More
