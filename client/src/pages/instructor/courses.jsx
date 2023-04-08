@@ -5,8 +5,6 @@ import Link from "next/link";
 import { AiOutlinePlayCircle } from "react-icons/ai";
 import Head from "next/head";
 import { toast } from "react-toastify";
-import { useAuth } from "@/context/AuthContext";
-import {cookies} from 'next/headers'
 export default function InstructorCourses(){
     const [courses, setCourses] = useState([]);
     useEffect(()=>{
@@ -104,10 +102,17 @@ export default function InstructorCourses(){
                     </div>
                   ))
             ) : (
-                <h1 className="text-center text-3xl font-bold text-gray-500">
-                    No Courses Yet
-                </h1>
+                <div className="text-center">
 
+                <h1 className="text-center text-3xl font-bold text-gray-500">
+                    Please add course to see them here
+                </h1>
+                <Link href="/instructor/course/create-course">
+                    <button className="bg-primary text-white px-4 py-2 rounded-lg mt-4 hover:bg-purple-700 animate transition-all ease-in-out duration-500">
+                        Create Course
+                    </button>
+                </Link>
+                </div>
             )
         }
       </div>
