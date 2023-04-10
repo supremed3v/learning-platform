@@ -2,6 +2,8 @@ import { Layout } from "@/components";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/router";
+import {toast} from 'react-toastify'
 
 const Stripe = () => {
   const [stripeAccount, setStripeAccount] = useState(null);
@@ -22,95 +24,8 @@ const Stripe = () => {
     routing_number: "",
   });
   const { user, loadUser } = useAuth();
+  const router = useRouter();
 
-  const formFields = [
-    {
-      label: "Account Number",
-      name: "account_number",
-      type: "number",
-      placeholder: "Account Number",
-      id: 1,
-    },
-    {
-      label: "Routing Number",
-      name: "routing_number",
-      type: "number",
-      placeholder: "Routing Number",
-      id: 2,
-    },
-    {
-      label: "First Name",
-      name: "first_name",
-      type: "text",
-      placeholder: "First Name",
-      required: true,
-      id: 3,
-    },
-    {
-      label: "Last Name",
-      name: "last_name",
-      type: "text",
-      placeholder: "Last Name",
-      required: true,
-      id: 4,
-    },
-    {
-      label: "City",
-      name: "city",
-      type: "text",
-      placeholder: "City",
-      required: true,
-      id: 5,
-    },
-    {
-      label: "State",
-      name: "state",
-      type: "text",
-      placeholder: "State",
-      required: true,
-      id: 6,
-    },
-    {
-      label: "Postal Code",
-      name: "postal_code",
-      type: "text",
-      placeholder: "Postal Code",
-      required: true,
-      id: 7,
-    },
-    {
-      label: "Line 1",
-      name: "line1",
-      type: "text",
-      placeholder: "Line 1",
-      required: true,
-      id: 8,
-    },
-    {
-      label: "Day of Birth",
-      name: "day",
-      type: "text",
-      placeholder: "Day of Birth",
-      required: true,
-      id: 9,
-    },
-    {
-      label: "Month of Birth",
-      name: "month",
-      type: "text",
-      placeholder: "Month of Birth",
-      required: true,
-      id: 10,
-    },
-    {
-      label: "Year of Birth",
-      name: "year",
-      type: "text",
-      placeholder: "Year of Birth",
-      required: true,
-      id: 11,
-    },
-  ];
 
   const createConnectAccount = async () => {
     const { data } = await axios.post(
@@ -137,7 +52,7 @@ const Stripe = () => {
       }
     };
   useEffect(() => {
-    user && getRequiredFields();
+    getRequiredFields();
   }, []);
 
   const submitDetails = async (e) => {
@@ -149,6 +64,12 @@ const Stripe = () => {
     );
     if (data && data.success) {
       setLoading(false);
+      toast.success("Account created successfully, redirecting...")
+      loadUser()
+      setTimeout(() => {
+        router.push("/instructor/earnings");
+      }, 3000
+      )
     } else {
       setError(data.message);
       setLoading(false);
@@ -176,23 +97,171 @@ const Stripe = () => {
 
           {requiredFields.length !== 0 && (
             <form onSubmit={submitDetails}>
-              {formFields.map((field, id) => (
-                <div className="flex flex-col" key={id}>
-                  <label>{field.label}</label>
-                  <input
-                    type={field.type}
-                    name={field.name}
-                    placeholder={field.placeholder}
-                    value={values[field.name]}
-                    onChange={(e) =>
-                      setValues({ ...values, [field.name]: e.target.value })
-                    }
-                  />
-                </div>
-              ))}
-              <button className="bg-blue-500 p-2 text-white" type="submit">
-                Submit
-              </button>
+              <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
+      <div className="mx-auto max-w-2xl">
+        
+  
+    <div className="space-y-12">
+
+      <div className="border-b border-gray-900/10 pb-12">
+        <h2 className="text-base font-semibold leading-7 text-gray-900">Bank Account Information</h2>
+        <p className="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can receive mail. (Your email is:- {user?.email})</p>
+
+        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div className="sm:col-span-3">
+            <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">First name</label>
+            <div className="mt-2">
+              <input type="text" name="first-name" id="first-name" autoComplete="given-name" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              value={values.first_name}
+              onChange={(e) =>
+                setValues({ ...values, first_name: e.target.value })
+              }
+              />
+            </div>
+          </div>
+
+          <div className="sm:col-span-3">
+            <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">Last name</label>
+            <div className="mt-2">
+              <input type="text" name="last-name" id="last-name" autoComplete="family-name" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              value={values.last_name}
+              onChange={(e) =>
+                setValues({ ...values, last_name: e.target.value })
+              }
+              />
+            </div>
+          </div>
+          <div className="sm:col-span-3">
+            <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">Routing Number</label>
+            <div className="mt-2">
+              <input type="number" name="first-name" id="first-name" autoComplete="given-name" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              value={values.routing_number}
+              onChange={(e) =>
+                setValues({ ...values, routing_number: e.target.value })
+              }
+              />
+            </div>
+          </div>
+
+          <div className="sm:col-span-3">
+            <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">Account Number</label>
+            <div className="mt-2">
+              <input type="number" name="last-name" id="last-name" autoComplete="family-name" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              value={values.account_number}
+              onChange={(e) =>
+                setValues({ ...values, account_number: e.target.value })
+              }
+              />
+            </div>
+          </div>
+
+          
+
+          <div className="sm:col-span-3">
+            <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">Country</label>
+            <div className="mt-2">
+              <select id="country" name="country" autoComplete="country-name" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                <option>United States</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="col-span-full">
+            <label htmlFor="street-address" className="block text-sm font-medium leading-6 text-gray-900">Street address</label>
+            <div className="mt-2">
+              <input type="text" name="street-address" id="street-address" autoComplete="street-address" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              value={values.line1}
+              onChange={(e) =>
+                setValues({ ...values, line1: e.target.value })
+              }
+              />
+            </div>
+          </div>
+
+          <div className="sm:col-span-2 sm:col-start-1">
+            <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">City</label>
+            <div className="mt-2">
+              <input type="text" name="city" id="city" autoComplete="address-level2" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              value={values.city}
+              onChange={(e) =>
+                setValues({ ...values, city: e.target.value })
+              }
+              />
+            </div>
+          </div>
+
+          <div className="sm:col-span-2">
+            <label htmlFor="region" className="block text-sm font-medium leading-6 text-gray-900">State / Province</label>
+            <div className="mt-2">
+              <input type="text" name="region" id="region" autoComplete="address-level1" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              value={values.state}
+              onChange={(e) =>
+                setValues({ ...values, state: e.target.value })
+              }
+              />
+            </div>
+          </div>
+
+          <div className="sm:col-span-2">
+            <label htmlFor="postal-code" className="block text-sm font-medium leading-6 text-gray-900">ZIP / Postal code</label>
+            <div className="mt-2">
+              <input type="text" name="postal-code" id="postal-code" autoComplete="postal-code" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              value={values.postal_code}
+              onChange={(e) =>
+                setValues({ ...values, postal_code: e.target.value })
+              }
+              />
+            </div>
+          </div>
+          <h2 className="text-base font-semibold leading-7  text-gray-900">DOB</h2>
+          <div className="sm:col-span-2 sm:col-start-1">
+            <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">Day</label>
+            <div className="mt-2">
+              <input type="number" name="city" id="city" autoComplete="address-level2" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              value={values.day}
+              onChange={(e) =>
+                setValues({ ...values, day: e.target.value })
+              }
+              />
+            </div>
+          </div>
+
+          <div className="sm:col-span-2">
+            <label htmlFor="region" className="block text-sm font-medium leading-6 text-gray-900">Month</label>
+            <div className="mt-2">
+              <input type="number" name="region" id="region" autoComplete="address-level1" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              value={values.month}
+              onChange={(e) =>
+                setValues({ ...values, month: e.target.value })
+              }
+              />
+            </div>
+          </div>
+
+          <div className="sm:col-span-2">
+            <label htmlFor="postal-code" className="block text-sm font-medium leading-6 text-gray-900">Year</label>
+            <div className="mt-2">
+              <input type="number" name="postal-code" id="postal-code" autoComplete="postal-code" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              value={values.year}
+              onChange={(e) =>
+                setValues({ ...values, year: e.target.value })
+              }
+              />
+            </div>
+          </div>
+        </div>
+
+    </div>
+
+    <div className="mt-6 flex items-center justify-end gap-x-6">
+      <button type="button" className="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
+      <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
+    </div>
+  
+
+      </div>
+    </div>
+  </div>
             </form>
           )}
         </div>

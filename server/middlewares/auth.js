@@ -3,8 +3,9 @@ import { User } from "../models/user.js";
 
 export const authCheck = async (req, res, next) => {
   const { token } = req.cookies;
+  const { authorization } = req.headers;
 
-  if (!token) {
+  if (!token && !authorization) {
     return res.status(401).json({
       success: false,
       message: "Unauthorized",
@@ -12,13 +13,13 @@ export const authCheck = async (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify( token || authorization.split(" ")[1], process.env.JWT_SECRET);
     req.user = await User.findById(decoded.id);
     next();
   } catch (error) {
     return res.status(401).json({
       success: false,
-      message: "Unauthorized",
+      message: error.message,
     });
   }
 };

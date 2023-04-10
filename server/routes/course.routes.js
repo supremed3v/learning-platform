@@ -11,6 +11,7 @@ import {
   getInstructorCourses,
   getSingleCourse,
   updateLecture,
+  getInstructorCourse
 } from "../controllers/courseController.js";
 
 const router = express.Router();
@@ -38,6 +39,8 @@ router
     deleteLecture
   )
   .put(authCheck, adminCheck("admin", "instructor"), singleFile, updateLecture);
+
+router.route("/instructor/course/:id").get(authCheck, adminCheck("instructor"), getInstructorCourse);
 
 // Yet to be tested
 

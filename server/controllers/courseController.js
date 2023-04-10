@@ -392,3 +392,27 @@ export const getInstructorCourses = async (req, res) => {
   }
 
 }
+
+export const getInstructorCourse = async (req, res) => {
+  
+  try {
+    const course = await Course.findById(req.params.id).populate("instructor", "name email")
+
+    res.status(200).json({
+      success: true,
+      course,
+    });
+
+    if(!course){
+      return res.status(400).json({
+        error: "Course not found",
+      });
+    }
+
+  } catch(error){
+    res.status(500).json({
+      error: error.message,
+      success: false,
+    });
+  }
+}

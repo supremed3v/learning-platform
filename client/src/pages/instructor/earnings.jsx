@@ -30,8 +30,6 @@ const Payments = () => {
       getRequiredFields();
     }
   }, [stripeData]);
-  console.log(pendingFields);
-
   return (
     <Layout criteria={true}>
       <div className="flex container px-20 py-20">
