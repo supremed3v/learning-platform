@@ -77,6 +77,7 @@ export const addLecture = async (req, res) => {
 
   const data = parseData(file);
 
+
   if (!data) {
     return res.status(400).json({
       error: "Please upload a valid video",
@@ -90,10 +91,11 @@ export const addLecture = async (req, res) => {
       });
     }
 
-    const result = await cloudinary.v2.uploader.upload(data.content, {
+    const result = await cloudinary.v2.uploader.upload_large(data.content, {
       resource_type: "video",
       folder: "courses",
       allowed_formats: ["mp4", "mov", "avi", "wmv"],
+      chunk_size: 6000000, 
     });
 
     course.lectures.push({

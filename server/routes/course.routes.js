@@ -31,7 +31,7 @@ router
   .route("/course/:id/lecture")
   .put(authCheck, adminCheck("admin", "instructor"), singleFile, addLecture);
 router
-  .route("/course/:id/lecture/:lectureId")
+  .route("/course/:id/lecture")
   .delete(
     authCheck,
     adminCheck("admin", "instructor"),
