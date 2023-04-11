@@ -103,7 +103,7 @@ export const adminLinks = [
       bottom: 'auto',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
-      width: '50%',
+      width: '60%',
       height: '100vh',
     },
   };

@@ -28,8 +28,8 @@ router.route("/courses").get(authCheck, adminCheck("admin"), getAllCourses);
 router.route("/single-course/:id").get(getSingleCourse);
 
 router
-  .route("/course/:id/lecture")
-  .put(authCheck, adminCheck("admin", "instructor"), singleFile, addLecture);
+  .route("/course/add-lecture/:id")
+  .post(authCheck, adminCheck("admin", "instructor"), singleFile, addLecture);
 router
   .route("/course/:id/lecture")
   .delete(

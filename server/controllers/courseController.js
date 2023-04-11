@@ -63,7 +63,7 @@ export const createCourse = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
-      error: error.message,
+      error: error,
     });
   }
 };
@@ -94,7 +94,7 @@ export const addLecture = async (req, res) => {
     const result = await cloudinary.v2.uploader.upload_large(data.content, {
       resource_type: "video",
       folder: "courses",
-      allowed_formats: ["mp4", "mov", "avi", "wmv"],
+      allowed_formats: ["mp4", "mov", "avi", "wmv", "webm", "flv", "mkv"],
       chunk_size: 6000000, 
     });
 
