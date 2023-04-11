@@ -199,6 +199,8 @@ export const updateLecture = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
 
+    
+
     if (!course) {
       return res.status(400).json({
         error: "Course not found",

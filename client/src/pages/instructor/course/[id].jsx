@@ -97,7 +97,7 @@ const [editLecture, setEditLecture] = useState({})
     formData.set("file", file.file);
     try {
       setLoading(true);
-      const { data } = await axios.put(`http://localhost:3000/api/v1/course/lecture/${id}`, formData, {
+      const { data } = await axios.put(`http://localhost:3000/api/v1/course/lecture/${id}/${editLecture._id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
