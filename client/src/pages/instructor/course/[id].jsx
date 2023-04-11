@@ -148,7 +148,7 @@ const [editLecture, setEditLecture] = useState({})
                 {tab === "lectures" && (
                   <div className="flex flex-col">
                     {course.lectures.map((lecture) => (
-                      <div className="flex flex-row justify-between items-center">
+                      <div className="flex flex-row justify-between items-center" key={lecture._id}>
                         <div className="flex flex-col">
                           <h1 className="text-gray-900 text-xl title-font font-medium mb-4">
                             {editLecture.title}
@@ -196,9 +196,6 @@ const [editLecture, setEditLecture] = useState({})
                 <div className="flex mb-4">
                   <a className="flex-grow text-purple-500 border-b-2 border-purple-500 py-2 text-lg px-1">
                     Course Details
-                  </a>
-                  <a className="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
-                    Lectures
                   </a>
                 </div>
                 <div className="relative mb-4">
