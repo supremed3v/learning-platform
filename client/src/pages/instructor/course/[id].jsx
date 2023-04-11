@@ -89,6 +89,34 @@ const [editLecture, setEditLecture] = useState({})
     setLectureModal(!lectureModal);
     console.log
   }
+
+  const updateLecture = async () => {
+    const formData = new FormData();
+    formData.set("title", editLecture.title);
+    formData.set("description", editLecture.description);
+    formData.set("file", file.file);
+    try {
+      setLoading(true);
+      const { data } = await axios.put(`http://localhost:3000/api/v1/course/lecture/${id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      timeout: 1000000, // 10 
+    });
+    console.log(data)
+    if(data.success) {
+      setLoading(false);
+      toast.success("Lecture updated successfully");
+      setLectureModal(false);
+    } 
+    } catch (error) {
+      
+      setLoading(false);
+      toast.error("Something went wrong");
+      console.log(error)
+    }
+  }
+
   return (
     <div>
       <Layout criteria={true}>
