@@ -22,7 +22,6 @@ export default function InstructorCourses(){
       <Head>
         <title>Courses - E-learning Platform</title>
       </Head>
-      {loading && <h1 className="text-center text-3xl font-bold text-gray-500">Loading...</h1>}
       <h1 className="text-center border-b-2 text-secondary font-bold text-6xl py-6">
         Courses
       </h1>
