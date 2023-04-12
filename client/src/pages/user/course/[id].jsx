@@ -20,35 +20,34 @@ const CourseLayout = ({ course }) => {
 
   return (
     <Layout criteria={true}>
-      <div>
-        {/* Udemy layout for course video watch */}
-
-        {/* Create two section one for video and other for playlist */}
-
+      <div className="container px-5 ml-10 py-20 ">
+        <h1 className="text-4xl text-primary font-semibold text-center py-10">
+            {course.title} - {course.lectures.length} lectures
+        </h1>
         <div className="flex">
-          <div className="w-3/4">
+          <div className="w-3/4 max-h-full">
             {/* Video section */}
               {tutorial && (
                   <ReactPlayer url={tutorial} controls={true} width="100%" height="100%" />
               )}
           </div>
-          <div className="w-1/4">
-            <div className="flex flex-col">
+          <div className="w-2/4 py-4 mx-4 bg-gray-100 drop-shadow-md rounded">
+            <div className="flex flex-row ml-4">
               <div className="flex flex-col">
-                <h1 className="text-2xl font-bold">Playlist</h1>
+                <h1 className="text-2xl font-bold text-primary">Playlist</h1>
                 <div className="flex flex-col">
                   {course?.lectures?.map((tutorial, index) => (
                     <div className="flex flex-col" key={tutorial._id}>
-                      <div className="flex flex-col">
+                      
                       <button
                           onClick={() => changeTutorial(tutorial.video.url, index)}
-                          className={`text-xl font-bold ${
-                            selectedVideo === index ? "text-blue-600" : ""
+                          className={`text-xl font-bold text-left bg-primary p-4 rounded mt-4 ${
+                            selectedVideo === index ? "text-blue-600" : "text-white"
                           }`}
                         >
-                          {tutorial.title}
+                         {index} - {tutorial.title} 
                         </button>
-                      </div>
+                     
                     </div>
                   ))}
                 </div>
