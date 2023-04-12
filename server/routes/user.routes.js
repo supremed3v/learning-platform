@@ -14,6 +14,7 @@ import singleFile from "../middlewares/singleFile.js";
 import { authCheck } from "../middlewares/auth.js";
 import {
   addToPlaylist,
+  getSingleUserCourse,
   removeCourse,
   userCourse,
 } from "../controllers/courseController.js";
@@ -31,6 +32,7 @@ router.route("/register-instructor").post(singleFile, registerInstructor);
 // Yet to be tested
 router.route("/me/update").put(authCheck, singleFile, updateUser);
 router.route("/me/my-courses").get(authCheck, userCourse);
+router.route('/me/my-courses/:id').get(authCheck, getSingleUserCourse);
 router.route("/me/my-courses/:id").delete(authCheck, removeCourse);
 router.route("/me/become-instructor").put(authCheck, becomeInstructor);
 router.route("/forgot-password").post(authCheck, forgotPassword);

@@ -336,6 +336,40 @@ export const userCourse = async (req, res) => {
   }
 };
 
+export const getSingleUserCourse = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    const { id } = req.params;
+    const course = await Course.findById(id);
+
+    // Check if course exists in user's playList
+    const courseIndex = user.playList.findIndex(item => item.course.toString() === course._id.toString());
+    if (courseIndex === -1) {
+      return res.status(400).json({
+        error: "Course not found in user's playList",
+        success: false
+      });
+    }
+
+    // Get progress and completed status for course
+    const progress = user.playList[courseIndex].progress;
+    const completed = user.playList[courseIndex].completed;
+
+    // Return course data with progress and completed status
+    res.status(200).json({
+      success: true,
+      course,
+      progress,
+      completed
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+}
+
+
 export const addToPlaylist = async (req, res) => {
   const user = await User.findById(req.user._id);
   const { courseId } = req.body;
