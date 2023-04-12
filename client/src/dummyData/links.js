@@ -64,13 +64,7 @@ export const adminLinks = [
   ]
 
     export const userLinks = [
-        {
-            name: "Dashboard",
-            icon: (
-                <MdOutlineSpaceDashboard className="text-2xl text-gray-600 group-hover:text-white " />
-            ),
-            href: "/user/dashboard",
-        },
+        
         {
             name: "Courses",
             icon: (
