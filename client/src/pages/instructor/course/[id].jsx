@@ -92,7 +92,6 @@ const [editLecture, setEditLecture] = useState({
     setEditLecture(lecture)
     setLectureModal(!lectureModal);
   }
-  console.log(file)
 
   const updateLecture = async () => {
     const formData = new FormData();
@@ -528,7 +527,6 @@ export const getServerSideProps = async (context) => {
       },
     }
   );
-  console.log(data.course);
 
   return {
     props: {
