@@ -320,10 +320,10 @@ export const removeCourse = async (req, res) => {
 
 export const userCourse = async (req, res) => {
   try {
-    const courses = await User.findById(req.user._id).populate(
-      "playList.course",
-      "title numOfVideos"
-    );
+    const user = await User.findById(req.user._id)
+    const courseId = user.playList.map((item) => item.course);
+
+    const courses = await Course.find({ _id: { $in: courseId } })
 
     res.status(200).json({
       success: true,

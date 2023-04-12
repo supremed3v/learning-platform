@@ -2,10 +2,10 @@ import React from "react";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import { Layout } from "@/components";
+import axios from "axios";
 
-const UserCourses = () => {
+const UserCourses = ({courses}) => {
   const { user } = useAuth();
-  console.log("user", user)
   return (
     <Layout criteria={true}>
       {user?.playList.length < 1 && (
@@ -26,7 +26,7 @@ const UserCourses = () => {
       {user?.playList.length > 0 && (
         <>
           <h1 className="text-2xl text-center">Your Courses</h1>
-          {user?.playList.map((course) => (
+          {courses?.map((course) => (
               <div className="flex justify-center items-center">
                 <Link
                   href={`/courses/${course._id}`}
@@ -52,3 +52,29 @@ const UserCourses = () => {
 };
 
 export default UserCourses;
+
+
+// Path: client/src/pages/user/courses.jsx
+
+export const getServerSideProps = async (context) => {
+  const { cookies } = context.req;
+  const { token } = cookies;
+
+  const { data } = await axios.get(
+    "http://localhost:3000/api/v1/me/my-courses",
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  console.log(data)
+
+  return {
+    props: {
+      courses: data.courses,
+    },
+
+  };
+};
