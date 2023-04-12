@@ -27,7 +27,6 @@ const customStyles = {
 function FormFunction({ sellerId, course }) {
   const { user } = useAuth();
   const payBtn = React.useRef(null);
-  const amount = 1000;
   const stripe = useStripe();
   const elements = useElements();
   console.log("course", course);
@@ -56,6 +55,7 @@ function FormFunction({ sellerId, course }) {
     payBtn.current.disabled = true;
 
     try {
+      const amount = course.amount * 100;
       const { data } = await axios.post(
         "http://localhost:3000/api/v1/stripe/create-payment-intent",
         { amount, sellerId },
@@ -88,6 +88,7 @@ function FormFunction({ sellerId, course }) {
           )
           if(data.success){
             console.log("Course purchased");
+            closeModal();
           }
         }
 
@@ -147,7 +148,7 @@ function FormFunction({ sellerId, course }) {
               </div>
               <div className="flex">
                 <span className="title-font font-medium text-2xl text-gray-900">
-                  $58.00
+                  ${course.amount}
                 </span>
                 {
                   user && user.role !== "instructor" && 

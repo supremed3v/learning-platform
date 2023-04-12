@@ -100,7 +100,7 @@ const Navbar = () => {
         </div>
       )}
       {user && user.role === "user" && (
-        <div>
+        <div className="w-[200px]">
           <Link href="/user/dashboard">
             <button
               className={`mr-5 cursor-pointer ${
