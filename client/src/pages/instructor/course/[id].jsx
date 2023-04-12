@@ -112,6 +112,7 @@ const [editLecture, setEditLecture] = useState({
       setLoading(false);
       toast.success("Lecture updated successfully");
       setLectureModal(false);
+      router.reload();
     } 
     } catch (error) {
       
@@ -119,6 +120,24 @@ const [editLecture, setEditLecture] = useState({
       toast.error("Something went wrong");
       console.log(error)
     }
+  }
+
+  const deleteLecture = async (id) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.delete(`http://localhost:3000/api/v1/course/lecture/${course._id}/${id}`);
+      console.log(data)
+      if(data.success) {
+        setLoading(false);
+        toast.success("Lecture deleted successfully");
+        setLectureModal(false);
+      } 
+      } catch (error) {
+        
+        setLoading(false);
+        toast.error("Something went wrong");
+        console.log(error)
+      }
   }
 
   return (
@@ -193,7 +212,9 @@ const [editLecture, setEditLecture] = useState({
                           >
                             Edit
                           </button>
-                          <button className="rounded w-15 h-10 py-2 px-6 border-0 inline-flex items-center justify-center text-white ml-4 bg-purple-500 hover:bg-purple-600">
+                          <button className="rounded w-15 h-10 py-2 px-6 border-0 inline-flex items-center justify-center text-white ml-4 bg-purple-500 hover:bg-purple-600" 
+                          onClick={() => deleteLecture(lecture._id)}
+                           >
                             Delete
                           </button>
                         </div>
