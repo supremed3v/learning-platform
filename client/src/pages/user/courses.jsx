@@ -29,8 +29,11 @@ const UserCourses = ({courses}) => {
           {courses?.map((course) => (
               <div className="flex justify-center items-center">
                 <Link
-                  href={`/courses/${course._id}`}
+                  href={`/user/course/${course._id}`}
                   className="mt-20 bg-blue-500 hover:bg-blue-700 text-white p-2 rounded ease-in-out animate transition-all"
+                 query={{
+                  data: JSON.stringify(course)
+                 }}
                 >
                   {course.title}
                 </Link>
