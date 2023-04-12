@@ -217,11 +217,14 @@ export const updateLecture = async (req, res) => {
 
     const { title, description } = req.body;
 
-    if (title) {
+    if(!title || !description) {
       lecture.title = title;
-    } else if (description) {
       lecture.description = description;
-    } else if (req.file) {
+
+      await course.save();
+    }
+
+    if (req.file) {
       const file = req.file;
 
       const data = parseData(file);
@@ -232,16 +235,24 @@ export const updateLecture = async (req, res) => {
         });
       }
 
-      const result = await cloudinary.v2.uploader.upload(data.content, {
-        resource_type: "video",
-        folder: "courses",
-        allowed_formats: ["mp4", "mov", "avi", "wmv"],
-      });
+      const result = await cloudinary.v2.uploader.upload_large(
+        data.content,
+        {
+          resource_type: "video",
+          folder: "courses",
+          allowed_formats: ["mp4", "mov", "avi", "wmv", "webm", "flv", "mkv", "webm"],
+          chunk_size: 6000000,
+        }
+      );
 
-      lecture.video = {
-        public_id: result.public_id,
-        url: result.secure_url,
-      };
+      const result2 = await cloudinary.v2.uploader.destroy(
+        lecture.video.public_id
+      );
+
+      if (result2) {
+        lecture.video.public_id = result.public_id;
+        lecture.video.url = result.secure_url;
+      }
     }
 
     await course.save();

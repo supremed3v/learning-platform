@@ -40,7 +40,11 @@ const onFileChange = (e) => {
   setFile({ file: e.target.files[0] })
 }
 
-const [editLecture, setEditLecture] = useState({})
+const [editLecture, setEditLecture] = useState({
+  title: "",
+  description: "",
+  file: "",
+})
 
   const sendData = async () => {
     const formData = new FormData();
@@ -87,8 +91,8 @@ const [editLecture, setEditLecture] = useState({})
   const handleEditLecture = (lecture) => {
     setEditLecture(lecture)
     setLectureModal(!lectureModal);
-    console.log
   }
+  console.log(file)
 
   const updateLecture = async () => {
     const formData = new FormData();
@@ -179,7 +183,7 @@ const [editLecture, setEditLecture] = useState({})
                       <div className="flex flex-row justify-between items-center mb-4 bg-slate-300 p-2 rounded" key={lecture._id}>
                         <div className="flex flex-col">
                           <h1 className="text-gray-900 text-xl title-font font-medium mb-4">
-                            {editLecture.title}
+                            {lecture.title}
                           </h1>
                           <p className="leading-relaxed mb-4">{lecture.description}</p>
                         </div>
@@ -426,7 +430,7 @@ const [editLecture, setEditLecture] = useState({})
                     id="title"
                     name="title"
                     value={editLecture.title}
-                    onChange={(e) =>  setLectureData({ ...editLecture, title: e.target.value })}
+                    onChange={(e) =>  setEditLecture({ ...editLecture, title: e.target.value })}
                     className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-purple-500 focus:bg-white focus:ring-2 focus:ring-purple-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                   />
                 </div>
@@ -471,6 +475,11 @@ const [editLecture, setEditLecture] = useState({})
                     "
                   />
 
+                </div>
+                <div className="flex mb-4 px-4">
+                  <button className="text-white bg-purple-500 border-0 py-2 px-8 focus:outline-none hover:bg-purple-600 rounded text-lg" onClick={updateLecture} disabled={loading}>
+                    Update
+                    </button>
                 </div>
               </div>
               </div>
